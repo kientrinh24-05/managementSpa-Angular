@@ -29,10 +29,14 @@ export class RoleGuard implements CanActivate {
 
     canActivate(route: ActivatedRouteSnapshot) {
         const user = this.authenticationService.userValue;
-        if (route.data.roles && route.data.roles.indexOf(user.role) === -1) {
-            this.router.navigate(['/unauthorized']);
-            return false; 
-        }     
+        console.log(user ,'user');
+        console.log(route.data.roles );
+        
+        
+        // if (route.data.roles && route.data.roles.indexOf(user.role) === 'admin') {
+        //     this.router.navigate(['/unauthorized']);
+        //     return false; 
+        // }     
         return true;
     }
 }

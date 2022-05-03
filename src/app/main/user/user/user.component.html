@@ -29,7 +29,7 @@
         <div class="form-group">
           <label class="col-sm-1 control-label no-padding-right"> Họ tên</label>
           <div class="col-sm-11">
-            <input formControlName="hoten"  type="text" placeholder="Họ tên" style="width: 100%;" />
+            <input formControlName="username"  type="text" placeholder="Họ tên" style="width: 100%;" />
           </div>
         </div>
         <div class="form-group">
@@ -44,9 +44,9 @@
       <ng-template pTemplate="header">
         <tr>
           <th style="width: 70px; text-align: center;">STT</th>
-          <th style="width: 15%; text-align: left;">Tài khoản</th>
           <th style="width: 20%; text-align: left;">Họ tên</th>
           <th style="text-align: left;">Địa chỉ</th>
+          <th style="text-align: left;">Giới tính</th>
           <th style="width: 130px; text-align: left;">Loại quyền</th>
           <th style="width: 120px; text-align: left;">Tác vụ</th>
         </tr>
@@ -54,10 +54,10 @@
       <ng-template pTemplate="body" let-item  let-i="rowIndex">
         <tr>
           <td style="width: 70px; text-align: center;">{{ i + 1 }}</td>
-          <td>{{ item.taikhoan }}</td>
-          <td>{{ item.hoten }}</td>
-          <td>{{ item.diachi }}</td>
-          <td>{{ item.role }}</td>
+          <td>{{ item.username }}</td>
+          <td>{{ item.address }}</td>
+          <td>{{ item.gender == 0 ? "Nữ" : "Nam" }}</td>
+          <td>{{ item.roles[0].id == 1 ? "Admin" : "User"}}</td>
           <td class="action-col" >
             <div class="btn-group">
               <button title="" class="btn btn-xs btn-white btn-default"  (click)="openUpdateModal(item)">  
@@ -91,16 +91,16 @@
             <div class="form-group">
               <label class="col-sm-2 control-label no-padding-right"> Họ tên(<span style="color: red;">*</span>)</label>
               <div class="col-sm-5">
-                <input type="text" placeholder="Họ tên" formControlName="hoten"/>
-                <div *ngIf="submitted && f.hoten.errors" class="invalid-feedback">
-                  <div *ngIf="f.hoten.errors.required">Họ tên là bắt buộc</div>
+                <input type="text" placeholder="Họ tên" formControlName="username"/>
+                <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
+                  <div *ngIf="f.username.errors.required">Họ tên là bắt buộc</div>
                 </div>
               </div>
               <label class="col-sm-2 control-label no-padding-right"> Ngày sinh(<span style="color: red;">*</span>)</label>
               <div class="col-sm-3">
-                <p-calendar formControlName="ngaysinh" [dateFormat]="dateFormat"  [locale]="locale_vn" [showIcon]="true" inputId="icon"></p-calendar>
-                <div *ngIf="submitted && f.ngaysinh.errors" class="invalid-feedback">
-                  <div *ngIf="f.ngaysinh.errors.required">Ngày sinh là bắt buộc</div>
+                <p-calendar formControlName="birthDay" [dateFormat]="dateFormat"  [locale]="locale_vn" [showIcon]="true" inputId="icon"></p-calendar>
+                <div *ngIf="submitted && f.birthDay.errors" class="invalid-feedback">
+                  <div *ngIf="f.birthDay.errors.required">Ngày sinh là bắt buộc</div>
                 </div>
               </div>
             </div>
@@ -115,19 +115,19 @@
               </div>
               <label class="col-sm-2 control-label no-padding-right"> Giới tính(<span style="color: red;">*</span>)</label>
               <div class="col-sm-3">
-                <p-dropdown [options]="genders" formControlName="gioitinh" [style]="{'width':'100%'}"></p-dropdown>
-                <div *ngIf="submitted && f.gioitinh.errors" class="invalid-feedback">
-                  <div *ngIf="f.gioitinh.errors.required">Giới tính là bắt buộc</div>
+                <p-dropdown [options]="gender" formControlName="gender" [style]="{'width':'100%'}"></p-dropdown>
+                <div *ngIf="submitted && f.gender.errors" class="invalid-feedback">
+                  <div *ngIf="f.gender.errors.required">Giới tính là bắt buộc</div>
                 </div>
               </div>
             </div>
             <div class="form-group">
               <label class="col-sm-2 control-label no-padding-right"> Địa chỉ</label>
               <div class="col-sm-10">
-                <input type="text" formControlName="diachi" placeholder="Địa chỉ" />
+                <input type="text" formControlName="address" placeholder="Địa chỉ" />
               </div>
             </div>
-            <div class="form-group">
+            <!-- <div class="form-group">
               <label class="col-sm-2 control-label no-padding-right"> Ảnh đại diện</label>
               <div class="col-sm-10">
                 <p-fileUpload #file_image mode="advanced" [showUploadButton]="false" cancelLabel="Hủy" chooseLabel ="Chọn ảnh"   multiple="false" accept="image/*" maxFileSize="1000000">
@@ -137,18 +137,18 @@
               </p-fileUpload>
              
               </div>
-            </div>
+            </div> -->
             <div class="form-group">
-              <label class="col-sm-2 control-label no-padding-right"> Tài khoản(<span style="color: red;">*</span>)</label>
+              <!-- <label class="col-sm-2 control-label no-padding-right"> Tài khoản(<span style="color: red;">*</span>)</label>
               <div class="col-sm-4">
                 <input type="text" formControlName="taikhoan" placeholder="Tài khoản" />
                 <div *ngIf="submitted && f.taikhoan.errors" class="invalid-feedback">
                   <div *ngIf="f.taikhoan.errors.required">Tài khoản là bắt buộc</div>
                 </div>
-              </div>
+              </div> -->
               <label class="col-sm-2 control-label no-padding-right"> Loại quyền(<span style="color: red;">*</span>)</label>
               <div class="col-sm-4">
-                <p-dropdown [options]="roles" formControlName="role" [style]="{'width':'100%'}"></p-dropdown>
+                <p-dropdown [options]="role" formControlName="role" [style]="{'width':'100%'}"></p-dropdown>
                 <div *ngIf="submitted && f.role.errors" class="invalid-feedback">
                   <div *ngIf="f.role.errors.required">Loại quyền là bắt buộc</div>
                 </div>
@@ -157,20 +157,20 @@
             <div class="form-group">
               <label class="col-sm-2 control-label no-padding-right"> Mật khẩu(<span style="color: red;">*</span>)</label>
               <div class="col-sm-4">
-                <input type="password" formControlName="matkhau" placeholder="Mật khẩu" />
-                <div *ngIf="submitted && f.matkhau.errors" class="invalid-feedback">
-                  <div *ngIf="f.matkhau.errors.required">Mật khẩu là bắt buộc</div>
-                  <div *ngIf="f.matkhau.errors.matkhau">Độ dài mật khẩu tối thiệu phải là 6 ký tự và phải chứa ký tự đặc biệt @#!$%&*</div>
+                <input type="password" formControlName="password" placeholder="Mật khẩu" />
+                <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+                  <div *ngIf="f.password.errors.required">Mật khẩu là bắt buộc</div>
+                  <div *ngIf="f.password.errors.password">Độ dài mật khẩu tối thiệu phải là 6 ký tự và phải chứa ký tự đặc biệt @#!$%&*</div>
               </div>
               </div>
-              <label class="col-sm-2 control-label no-padding-right"> Nhập lại mật khẩu(<span style="color: red;">*</span>)</label>
+              <!-- <label class="col-sm-2 control-label no-padding-right"> Nhập lại mật khẩu(<span style="color: red;">*</span>)</label>
               <div class="col-sm-4">
                 <input type="password" formControlName="nhaplaimatkhau" placeholder="Nhập lại mật khẩu" />
                 <div *ngIf="submitted && f.nhaplaimatkhau.errors" class="invalid-feedback">
                   <div *ngIf="f.nhaplaimatkhau.errors.required">Xác nhận lại mật khẩu là bắt buộc</div>
                   <div *ngIf="f.nhaplaimatkhau.errors.mustMatch">Xác thực lại mật khẩu không đúng</div>
               </div>
-              </div>
+              </div> -->
             </div> 
         </div>
         <div class="modal-footer">
