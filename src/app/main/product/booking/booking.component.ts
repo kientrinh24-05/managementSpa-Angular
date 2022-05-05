@@ -7,17 +7,17 @@ import * as moment from 'moment';
 import 'rxjs/add/operator/takeUntil';
 declare var $: any;
 @Component({
-  selector: 'app-user',
-  templateUrl: './user.component.html',
-  styleUrls: ['./user.component.css'],
+  selector: 'app-booking',
+  templateUrl: './booking.component.html',
+  styleUrls: ['./booking.component.css'],
 })
-export class UserComponent extends BaseComponent implements OnInit {
+export class BookingComponent extends BaseComponent implements OnInit {
   public users: any;
   public user: any;
   public totalRecords:any;
   public pageSize = 10;
   public pageNumber = 1;
-  public ascSort = true;
+  public ascSort = 1;
   public sortCase = 1;
   public page = 1;
   public status = 1;
@@ -54,10 +54,28 @@ export class UserComponent extends BaseComponent implements OnInit {
       });
   } 
 
+  handleChange(id,value) {
+      // let data_image = data == '' ? null : data;
+      let tmp = {
+        status:value,
+        id:id,          
+        };
+      this._api.post('/api/v1/booking/booking_change_status',tmp).takeUntil(this.unsubscribe).subscribe(res => {
+          alert('Cập nhật trạng thái thành công');
+          this.search();
+        });
+      console.log(id , 'id');
+      
+      console.log(tmp ,'tmp');
+      
+     
+
+  }
+
   search() { 
     this.page = 1;
     this.pageSize = 10
-    this._api.post('/api/v1/user/user_get_list_paging_sort_search_filter',{pageNumber: this.pageNumber, pageSize: this.pageSize,searchKey:this.searchKey,sortCase:this.sortCase,ascSort:this.ascSort,status:this.status}).takeUntil(this.unsubscribe).subscribe(res => {
+    this._api.post('/api/v1/booking/booking_get_list_paging_sort_search_filter',{pageNumber: this.pageNumber, pageSize: this.pageSize,sortCase:this.sortCase,ascSort:this.ascSort}).takeUntil(this.unsubscribe).subscribe(res => {
       this.users = res.data.content;
       this.totalRecords =  res.totalItems;
       this.pageSize = res.pageSize;

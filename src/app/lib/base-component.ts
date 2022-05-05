@@ -18,13 +18,13 @@ export class BaseComponent {
           this.today = new Date();
           this.dateFormat = "dd/mm/yy";
           this.gender =  [
-            {label:'Nam',value:'1'},
-            {label:'Nữ',value:'2'},
-            {label:'Khác',value:'3'}
+            {label:'Nam',value:1},
+            {label:'Nữ',value:2},
+            {label:'Khác',value:3}
           ];   
           this.role =  [
-            {label:'admin',value:'1'},
-            {label:'user',value:'2'}
+            {label:'admin',value:1},
+            {label:'user',value:2}
           ];   
           this.locale_vn={
             "firstDayOfWeek": 1,

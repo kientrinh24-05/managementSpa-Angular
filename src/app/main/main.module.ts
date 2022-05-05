@@ -34,6 +34,12 @@ export const mainRoutes: Routes = [
           import('./user/user.module').then((m) => m.UserModule),
         canActivate: [RoleGuard], data: { roles: [Role.admin] },
       },
+      {
+        path: 'product',
+        loadChildren: () =>
+          import('./product/product.module').then((m) => m.ProductModule),
+        canActivate: [RoleGuard], data: { roles: [Role.admin] },
+      },
     ],
   },
 ];
