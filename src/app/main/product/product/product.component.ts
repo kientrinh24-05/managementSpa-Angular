@@ -30,6 +30,8 @@ export class ProductComponent extends BaseComponent implements OnInit {
   submitted = false;
   @ViewChild(FileUpload, { static: false }) file_image: FileUpload;
 
+  public avatarFile: File;
+
   constructor(private fb: FormBuilder, injector: Injector) { 
     super(injector);
   }
@@ -57,6 +59,8 @@ export class ProductComponent extends BaseComponent implements OnInit {
     this.pageSize = 10
     this._api.post('/api/v1/products/product_get_list_paging_sort_search_filter',{pageNumber: this.pageNumber, pageSize: this.pageSize,searchKey:this.searchKey,sortCase:this.sortCase,ascSort:this.ascSort,}).takeUntil(this.unsubscribe).subscribe(res => {
       this.users = res.data.content;
+      console.log(res.data.content);
+      
       this.totalRecords =  res.totalItems;
       this.pageSize = res.pageSize;
       });
@@ -81,30 +85,48 @@ export class ProductComponent extends BaseComponent implements OnInit {
 
   get f() { return this.formdata.controls; }
 
+  onSelectFile(event) {
+    this.avatarFile = event.target.files[0];
+    console.log(event.target.files);
+    
+  }
+
   onSubmit(value) {
     this.submitted = true;
     if (this.formdata.invalid) {
       return;
     } 
-    if(this.isCreate) { 
-      debugger;
+    if(this.isCreate) {
+      console.log(this.file_image._files[0]);
+      // const formData = new FormData();
+      // formData.append('file', this.file_image.files[0])
+
+      // let data_image = data == '' ? null : data;
+      // const formData = new FormData();
+      console.log(this.file_image);
+      
+      const formData = new FormData();
+      formData.append('file', this.file_image.files[0])
+      formData.append('name', value.name);
+      formData.append('price', value.price);
+      formData.append('description', value.description);
+      let tmp = {
+        imageFile:this.file_image.files[0],
+        name:value.name,
+        price:value.price,
+        description:value.description,       
+        };
+      // formData.append('tmp',tmp.imageFile);
+      console.log(tmp ,'tmp');
+      
+      this._api.post('/api/v1/products/product_create',tmp).takeUntil(this.unsubscribe).subscribe(res => {
+        alert('Thêm thành công');
+        this.search();
+        this.closeModal();     
+        });
       this.getEncodeFromImage(this.file_image).subscribe((data: any): void => {
-        let data_image = data == '' ? null : data;
-        // const formData = new FormData();
-        let tmp = {
-          imageFile:data_image,
-          name:value.name,
-          price:value.price,
-          description:value.description,       
-          };
-        // formData.append('tmp',tmp.imageFile);
-        console.log(tmp ,'tmp');
+        console.log(data);
         
-        // this._api.post('/api/v1/products/product_create',tmp).takeUntil(this.unsubscribe).subscribe(res => {
-        //   alert('Thêm thành công');
-        //   this.search();
-        //   this.closeModal();     
-        //   });
       });
     } else { 
       this.getEncodeFromImage(this.file_image).subscribe((data: any): void => {

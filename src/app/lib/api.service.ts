@@ -17,7 +17,7 @@ export class ApiService {
     // cloneHeader['Content-Type'] = 'application/json';
     // const headerOptions = new HttpHeaders(cloneHeader);
     return this._http
-      .post<any>(this.host + url, body)
+      .post<any>(this.host + url, obj)
       .pipe(
         map(res => {
           return res;

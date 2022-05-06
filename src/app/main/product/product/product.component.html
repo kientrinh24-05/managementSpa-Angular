@@ -51,7 +51,7 @@
         <ng-template pTemplate="body" let-item  let-i="rowIndex">
           <tr>
             <td style="width: 70px; text-align: center;">{{ i + 1 }}</td>
-            <td><img [src]="item.imageFile" alt="item.name"></td>
+            <td><img [src]="'http://localhost:8081' + item.imgUrl" alt="item.name"></td>
             <td>{{ item.name }}</td>
             <td>{{ item.price }}</td>
             <td>{{ item.description }}</td>
@@ -119,6 +119,7 @@
                       </ng-template>
                 </p-fileUpload>
                
+                <input type="file" name="" id="imageFileInput" (change)="onSelectFile($event)">
                 </div>
               </div>
         
