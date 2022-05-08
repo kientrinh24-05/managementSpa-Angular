@@ -1,9 +1,11 @@
+import { ApiUploadService } from './../../../lib/api-upload.service';
 import { Component, Injector, OnInit, ViewChild } from '@angular/core';
 import { FileUpload } from 'primeng/fileupload';
 import { FormBuilder, Validators} from '@angular/forms';
 import { BaseComponent } from '../../../lib/base-component';
 import * as moment from 'moment';
 import 'rxjs/add/operator/takeUntil';
+import { TmplAstText } from '@angular/compiler';
 declare var $: any;
 @Component({
   selector: 'app-product',
@@ -38,8 +40,8 @@ export class ProductComponent extends BaseComponent implements OnInit {
 
   ngOnInit(): void {
     this.formsearch = this.fb.group({
-      'username': [''],
-      'taikhoan': [''],     
+      'name': [''],
+      // 'taikhoan': [''],     
     });
    
    this.search();
@@ -57,7 +59,7 @@ export class ProductComponent extends BaseComponent implements OnInit {
   search() { 
     this.page = 1;
     this.pageSize = 10
-    this._api.post('/api/v1/products/product_get_list_paging_sort_search_filter',{pageNumber: this.pageNumber, pageSize: this.pageSize,searchKey:this.searchKey,sortCase:this.sortCase,ascSort:this.ascSort,}).takeUntil(this.unsubscribe).subscribe(res => {
+    this._api.post('/api/v1/products/product_get_list_paging_sort_search_filter',{pageNumber: this.pageNumber, pageSize: this.pageSize,searchKey:this.searchKey,sortCase:this.sortCase,ascSort:this.ascSort,status:this.status}).takeUntil(this.unsubscribe).subscribe(res => {
       this.users = res.data.content;
       console.log(res.data.content);
       
@@ -70,6 +72,9 @@ export class ProductComponent extends BaseComponent implements OnInit {
     this.pageSize = 10
     this._api.post('/api/v1/products/product_get_list_paging_sort_search_filter',{pageNumber: this.pageNumber, pageSize: this.pageSize,sortCase:this.sortCase,ascSort:this.ascSort,status:this.status, searchKey: this.formsearch.get('name').value}).takeUntil(this.unsubscribe).subscribe(res => {
       this.users = res.data.content;
+
+      console.log(res.data.content);
+      
       this.totalRecords =  res.totalItems;
       this.pageSize = res.pageSize;
       });
@@ -97,33 +102,45 @@ export class ProductComponent extends BaseComponent implements OnInit {
       return;
     } 
     if(this.isCreate) {
-      console.log(this.file_image._files[0]);
       // const formData = new FormData();
       // formData.append('file', this.file_image.files[0])
 
       // let data_image = data == '' ? null : data;
       // const formData = new FormData();
-      console.log(this.file_image);
+      console.log(this.avatarFile);
       
       const formData = new FormData();
-      formData.append('file', this.file_image.files[0])
-      formData.append('name', value.name);
-      formData.append('price', value.price);
-      formData.append('description', value.description);
-      let tmp = {
-        imageFile:this.file_image.files[0],
-        name:value.name,
-        price:value.price,
-        description:value.description,       
-        };
-      // formData.append('tmp',tmp.imageFile);
-      console.log(tmp ,'tmp');
+      formData.append('name', value.name)
+      formData.append('price', value.price)
+      formData.append('description', value.description)
+      formData.append('imageFile', this.avatarFile)
+
+      console.log(value , 'value');
       
-      this._api.post('/api/v1/products/product_create',tmp).takeUntil(this.unsubscribe).subscribe(res => {
-        alert('Thêm thành công');
-        this.search();
-        this.closeModal();     
-        });
+       let tmp = {
+       //imageFile:this.file_image.files[0].name,
+        name:value.name,
+        price:value.price,  
+        description:value.description,      
+       // imageFile: this.file_image.files[0]
+        };
+     // formData.append('tmp',tmp.imageFile);
+      //console.log(this.file_image.files[0] , 'File Image');
+      console.log(this._apiUpload);
+      fetch('http://localhost:8081/api/v1/products/product_create', {
+        method: 'POST',
+        body: formData
+      }).then(
+        response => {
+          alert('Thêm thành công');
+          this.search();
+          this.closeModal();
+          return true;
+        }
+      )
+      // this._apiUpload.post('/api/v1/products/product_create',formData).takeUntil(this.unsubscribe).subscribe(res => {
+      //   closeModal();
+      //   });
       this.getEncodeFromImage(this.file_image).subscribe((data: any): void => {
         console.log(data);
         
@@ -140,20 +157,21 @@ export class ProductComponent extends BaseComponent implements OnInit {
           };
         console.log(tmp ,'tmp');
         
-        this._api.put('/api/v1/user/user_update',tmp).takeUntil(this.unsubscribe).subscribe(res => {
+        this._apiUpload.put('/api/v1/products/product_update',tmp).takeUntil(this.unsubscribe).subscribe(res => {
           alert('Cập nhật thành công');
           this.search();
           this.closeModal();
           });
+
+        
       });
     }
 
-    this.loadPage(1);
    
   } 
 
   onDelete(row) { 
-    this._api.post('/api/v1/user/user_delete',[row.id]).takeUntil(this.unsubscribe).subscribe(res => {
+    this._api.post('/api/v1/products/product_delete',[row.id]).takeUntil(this.unsubscribe).subscribe(res => {
       alert('Xóa thành công');
       this.search(); 
       // this.loadPage(1);
@@ -194,19 +212,19 @@ export class ProductComponent extends BaseComponent implements OnInit {
   }
 
   public openUpdateModal(row) {
-    console.log(row,'row');
     
     this.doneSetupForm = false;
     this.showUpdateModal = true; 
     this.isCreate = false;
     setTimeout(() => {
       $('#createUserModal').modal('toggle');
-      this._api.get('/api/v1/user/user_get_detail/'+ row.id).takeUntil(this.unsubscribe).subscribe((res:any) => {
-        this.user = res.data; 
+      this._api.get('/api/v1/products/product_get_detail/'+ row.id).takeUntil(this.unsubscribe).subscribe((res:any) => {
+        this.user = res.data;       
           this.formdata = this.fb.group({
             'name': [this.user.name, Validators.required],
             'price': [this.user.price],
             'description': [this.user.description, Validators.required],
+            'imgUrl': [this.user.imgUrl],
           }, {
           
           }); 

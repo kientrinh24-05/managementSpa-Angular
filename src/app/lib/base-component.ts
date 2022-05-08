@@ -4,6 +4,7 @@ import { FileUpload } from 'primeng/fileupload';
 import { ApiService } from '../lib/api.service';
 import { ActivatedRoute } from '@angular/router';
 import { Injector } from '@angular/core';
+import { ApiUploadService } from './api-upload.service';
 declare var $: any;
 export class BaseComponent {
    public gender: any;
@@ -13,6 +14,7 @@ export class BaseComponent {
    public dateFormat: any;
    public unsubscribe = new Subject();
    public _api: ApiService;
+   public _apiUpload: ApiUploadService;
    public _route: ActivatedRoute;
    constructor(injector: Injector) { 
           this.today = new Date();
@@ -87,6 +89,7 @@ export class BaseComponent {
             "clear": "Xóa"
           };
           this._api = injector.get(ApiService);
+          this._apiUpload = injector.get(ApiUploadService);
           this._route = injector.get(ActivatedRoute);
       }
    public getEncodeFromImage(fileUpload: FileUpload) {

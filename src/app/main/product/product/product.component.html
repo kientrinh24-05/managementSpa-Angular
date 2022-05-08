@@ -51,7 +51,7 @@
         <ng-template pTemplate="body" let-item  let-i="rowIndex">
           <tr>
             <td style="width: 70px; text-align: center;">{{ i + 1 }}</td>
-            <td><img [src]="'http://localhost:8081' + item.imgUrl" alt="item.name"></td>
+            <td class="img_table"><img [src]="'http://localhost:8081' + item.imgUrl" alt="item.name"></td>
             <td>{{ item.name }}</td>
             <td>{{ item.price }}</td>
             <td>{{ item.description }}</td>
@@ -81,24 +81,24 @@
       <div class="modal-dialog modal-lg full-height-modal">
         <div class="modal-content">
           <div class="modal-header">
-            <h4  *ngIf="isCreate" class="modal-title">Nhập thông tin người dùng</h4>
-            <h4 *ngIf="!isCreate" class="modal-title">Sửa thông tin người dùng</h4>
+            <h4  *ngIf="isCreate" class="modal-title">Nhập thông tin dịch vụ</h4>
+            <h4 *ngIf="!isCreate" class="modal-title">Sửa thông tin dịch vụ</h4>
           </div>
           <form *ngIf="doneSetupForm" [formGroup]="formdata"  (ngSubmit)="onSubmit(formdata.value)" class="form-horizontal utehy-form">
             <div class="modal-body no-padding">
               <div class="form-group">
-                <label class="col-sm-2 control-label no-padding-right"> Họ tên(<span style="color: red;">*</span>)</label>
+                <label class="col-sm-2 control-label no-padding-right"> Tên dịch vụ(<span style="color: red;">*</span>)</label>
                 <div class="col-sm-5">
-                  <input type="text" placeholder="Họ tên" formControlName="name"/>
+                  <input type="text" placeholder="Họ tên" formControlName="name" name="name"/>
                   <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
-                    <div *ngIf="f.name.errors.required">Họ tên là bắt buộc</div>
+                    <div *ngIf="f.name.errors.required">Tên dịch vụ</div>
                   </div>
                 </div>
               </div>
               <div class="form-group">
                 <label class="col-sm-2 control-label no-padding-right"> Giá cả(<span style="color: red;">*</span>)</label>
                 <div class="col-sm-5">
-                  <input type="number" formControlName="price" placeholder="Nhập giá" />
+                  <input type="number" formControlName="price" placeholder="Nhập giá"  name="price"/>
                   <div *ngIf="submitted && f.price.errors" class="invalid-feedback">
                     <div *ngIf="f.price.errors.required">Giá là bắt buộc</div>
                 </div>
@@ -107,19 +107,22 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label no-padding-right">Ghi chú</label>
                 <div class="col-sm-10">
-                  <input type="text" formControlName="description" placeholder="Ghi chú" />
+                  <textarea formControlName="description" placeholder="Ghi chú"   name="description" cols="50" rows="5">
+
+                  </textarea>
+                  <!-- <input type="text" formControlName="description" placeholder="Ghi chú"   name="description"/> -->
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label no-padding-right"> Ảnh đại diện</label>
+                <label class="col-sm-2 control-label no-padding-right"> Ảnh dịch vụ</label>
                 <div class="col-sm-10">
-                  <p-fileUpload #file_image mode="advanced" [showUploadButton]="false" cancelLabel="Hủy" chooseLabel ="Chọn ảnh"   multiple="false" accept="image/*" maxFileSize="1000000">
+                  <!-- <p-fileUpload #file_image mode="advanced" [showUploadButton]="false" cancelLabel="Hủy" chooseLabel ="Chọn ảnh"   multiple="false" accept="image/*" maxFileSize="1000000">
                       <ng-template pTemplate="content">
                           <img *ngIf="user && user.imageFile" style="height: 100px;width: 100px;" [src]="user.imageFile">
                       </ng-template>
-                </p-fileUpload>
+                  </p-fileUpload> -->
                
-                <input type="file" name="" id="imageFileInput" (change)="onSelectFile($event)">
+                <input formControlName="imgUrl" name="imgUrl" type="file" name="" id="imageFileInput" (change)="onSelectFile($event)">
                 </div>
               </div>
         

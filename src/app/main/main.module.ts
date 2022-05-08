@@ -32,7 +32,7 @@ export const mainRoutes: Routes = [
         path: 'user',
         loadChildren: () =>
           import('./user/user.module').then((m) => m.UserModule),
-        canActivate: [RoleGuard], data: { roles: [Role.admin] },
+        canActivate: [RoleGuard], data: { roles: [Role.user] },
       },
       {
         path: 'product',
