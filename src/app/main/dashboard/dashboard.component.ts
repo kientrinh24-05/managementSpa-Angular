@@ -8,7 +8,7 @@ import { BaseComponent } from 'src/app/lib/base-component';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent extends BaseComponent implements OnInit {
-  public chartData: Object[];
+  public chartData: Object;
   public xAxis: Object;
   public yAxis: Object;
   public legend: Object;
