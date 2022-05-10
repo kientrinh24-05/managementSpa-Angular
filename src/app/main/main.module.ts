@@ -11,6 +11,7 @@ import { Role } from '../models/role';
 import { SharedModule } from '../shared/shared.module';
 import { UnauthorizedComponent } from '../shared/unauthorized/unauthorized.component';
 import { FileNotFoundComponent } from '../shared/file-not-found/file-not-found.component';
+import { ChartModule , LineSeriesService,CategoryService,LegendService,DataLabelService,TooltipService } from '@syncfusion/ej2-angular-charts';
 export const mainRoutes: Routes = [
   {
     path: '',
@@ -55,7 +56,9 @@ export const mainRoutes: Routes = [
     FooterComponent,
     NavbarComponent,
     MainComponent,
+    DashboardComponent,
   ],
-  imports: [SharedModule, CommonModule, RouterModule.forChild(mainRoutes)],
+  providers:[ LineSeriesService,CategoryService,LegendService,DataLabelService,TooltipService],
+  imports: [ChartModule,SharedModule, CommonModule, RouterModule.forChild(mainRoutes), ],
 })
 export class MainModule {}

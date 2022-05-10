@@ -7,7 +7,11 @@ import { Component, OnInit, AfterViewInit, Renderer2 } from '@angular/core';
 })
 export class AppComponent implements OnInit,AfterViewInit {
   title = 'admin';
-  constructor(private renderer: Renderer2){}
+ 
+  constructor(private renderer: Renderer2){
+
+    
+  }
   ngOnInit() { 
 
   }

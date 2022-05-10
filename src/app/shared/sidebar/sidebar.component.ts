@@ -7,7 +7,7 @@ declare let $: any;
 })
 export class SidebarComponent implements OnInit, AfterViewInit {
   public menus = [
-  {name :'Người dùng', url:'',icon:'user',childs:[{name:'Quản lý người dùng',url:'user/user'},{name:'Đăng xuất', url:''},{name:'Đăng nhập', url:'/login'}]},
+  {name :'Người dùng', url:'',icon:'user',childs:[{name:'Quản lý người dùng',url:'user/user'}]},
   {name:'Dịch vụ',url:'',icon:'signal',childs:[{name:'Quản lý đặt dịch vụ',url:'product/booking'},{name:'Quản lý dịch vụ',url:'product/product'}]},
   {name:'Liên hệ',url:'',icon:'comments-o',childs:[{name:'Quản lý liên hệ',url:'contact/contact'}]}
 ];

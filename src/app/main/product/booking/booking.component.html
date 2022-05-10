@@ -4,7 +4,7 @@
         <i class="ace-icon fa fa-home home-icon"></i>
         <a href="#">Trang chủ</a>
       </li>
-      <li class="active">Quản lý người dùng</li>
+      <li class="active">Quản lý đặt dịch vụ</li>
     </ul>
     <div class="nav-search">
       <p class="pull-right no-margin">
@@ -91,8 +91,8 @@
       <div class="modal-dialog modal-lg full-height-modal">
         <div class="modal-content">
           <div class="modal-header">
-            <h4  *ngIf="isCreate" class="modal-title">Nhập thông tin người dùng</h4>
-            <h4 *ngIf="!isCreate" class="modal-title">Sửa thông tin người dùng</h4>
+            <h4  *ngIf="isCreate" class="modal-title">Nhập thông tin dịch vụ</h4>
+            <h4 *ngIf="!isCreate" class="modal-title">Sửa thông tin dịch vụ</h4>
           </div>
           <form *ngIf="doneSetupForm" [formGroup]="formdata"  (ngSubmit)="onSubmit(formdata.value)" class="form-horizontal utehy-form">
             <div class="modal-body no-padding">

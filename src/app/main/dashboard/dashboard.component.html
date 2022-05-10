@@ -2,19 +2,24 @@
   <ul class="breadcrumb">
     <li>
       <i class="ace-icon fa fa-home home-icon"></i>
-      <a >Bàn làm việc</a>
-    </li> 
+      <a>Tổng quan</a>
+    </li>
   </ul><!-- /.breadcrumb -->
 </div>
-  
-  <div class="page-content"> 
-    <div class="row">
-      <div class="col-xs-12">
-        <!-- PAGE CONTENT BEGINS -->
-                    Bàn làm việc
 
-                    
-        <!-- PAGE CONTENT ENDS -->
-      </div><!-- /.col -->
-    </div><!-- /.row -->
-  </div><!-- /.page-content -->
+<div class="page-content">
+  <div class="row">
+    <div class="col-xs-12">
+      <!-- PAGE CONTENT BEGINS -->
+      <ejs-chart [primaryXAxis]="xAxis" [primaryYAxis]="yAxis" [title]="chartTitle" [legendSettings]="legend"
+        [tooltip]="tooltip">
+        <e-series-collection>
+          <e-series [dataSource]="chartData" type="Line" xName="month" yName="price" name="Sales" [marker]="marker">
+          </e-series>
+        </e-series-collection>
+      </ejs-chart>
+
+      <!-- PAGE CONTENT ENDS -->
+    </div><!-- /.col -->
+  </div><!-- /.row -->
+</div><!-- /.page-content -->
