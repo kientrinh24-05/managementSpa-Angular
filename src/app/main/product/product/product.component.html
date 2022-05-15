@@ -121,8 +121,9 @@
                           <img *ngIf="user && user.imageFile" style="height: 100px;width: 100px;" [src]="user.imageFile">
                       </ng-template>
                   </p-fileUpload> -->
-               
-                <input formControlName="imgUrl" name="imgUrl" type="file" name="" id="imageFileInput" (change)="onSelectFile($event)">
+                  
+                <input multiple formControlName="imgUrl" name="imgUrl" type="file" id="imgUrl" (change)="onSelectFile($event)">
+                  <img *ngIf="user && user.imgUrl" style="height: 100px;width: 100px;" [src]="'http://localhost:8081' + user.imgUrl">
                 </div>
               </div>
         

@@ -146,25 +146,46 @@ export class ProductComponent extends BaseComponent implements OnInit {
         
       });
     } else { 
-      this.getEncodeFromImage(this.file_image).subscribe((data: any): void => {
-        let data_image = data == '' ? null : data;
-        let tmp = {
-          imageFile:data_image,
-          name:value.name,
-          price:value.price,
-          description:value.description,  
-          id:this.user.id,          
-          };
-        console.log(tmp ,'tmp');
-        
-        this._apiUpload.put('/api/v1/products/product_update',tmp).takeUntil(this.unsubscribe).subscribe(res => {
-          alert('Cập nhật thành công');
-          this.search();
-          this.closeModal();
-          });
+      // this.getEncodeFromImage(this.file_image).subscribe((data: any): void => {
+      //   let data_image = data == '' ? null : data;
+      const formData = new FormData();
+      formData.append('name', value.name)
+      formData.append('price', value.price)
+      formData.append('description', value.description)
+      formData.append('imgFile', this.user.imgFile)
+      formData.append('id', this.user.id)
+      console.log(this.user.imgFile);
+    
+        // let tmpUpdate = {
+        //   imageFile: this.user.imgFile,
+        //   // imageFile:  this.avatarFile,
+        //   name:value.name,
+        //   price:value.price,
+        //   description:value.description,  
+        //   id:this.user.id,          
+        //   };
+
+        // console.log(tmpUpdate ,'tmp');
+        fetch('http://localhost:8081/api/v1/products/product_update', {
+          method: 'PUT',
+          body: formData
+        }).then(
+          response => {
+            
+            alert('Cập nhật thành công');
+            this.search();
+            this.closeModal();
+            return true;
+          }
+        )
+        // this._api.post('http://localhost:8081/api/v1/products/product_update',tmpUpdate).takeUntil(this.unsubscribe).subscribe(res => {
+        //   alert('Cập nhật thành công');
+        //   this.search();
+        //   this.closeModal();
+        //   });
 
         
-      });
+      // });
     }
 
    
@@ -220,6 +241,8 @@ export class ProductComponent extends BaseComponent implements OnInit {
       $('#createUserModal').modal('toggle');
       this._api.get('/api/v1/products/product_get_detail/'+ row.id).takeUntil(this.unsubscribe).subscribe((res:any) => {
         this.user = res.data;       
+        console.log(this.user.imgUrl);
+        
           this.formdata = this.fb.group({
             'name': [this.user.name, Validators.required],
             'price': [this.user.price],

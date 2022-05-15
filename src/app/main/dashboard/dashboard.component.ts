@@ -57,7 +57,7 @@ export class DashboardComponent extends BaseComponent implements OnInit {
 
   getStatisBook () {
     this._api.get('/api/v1/booking/booking_statistical').subscribe(res => {
-      this.chartData = res.data;
+      // this.chartData = res.data;
       
     }
     )}

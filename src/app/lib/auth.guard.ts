@@ -31,8 +31,7 @@ export class RoleGuard implements CanActivate {
         const user = this.authenticationService.userValue;
         console.log(user ,'user');
         console.log(route.data.roles );
-        
-        
+    
         // if (route.data.roles && route.data.roles.indexOf(user.role) === 'admin') {
         //     this.router.navigate(['/unauthorized']);
         //     return false; 

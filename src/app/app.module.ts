@@ -11,10 +11,12 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ErrorInterceptor } from './lib/error.interceptor';
 import { JwtInterceptor } from './lib/jwt.interceptor';
 
+
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent,  
+    LoginComponent,
+      
   ],
 
   imports: [
