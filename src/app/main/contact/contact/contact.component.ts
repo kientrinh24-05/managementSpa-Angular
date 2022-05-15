@@ -47,6 +47,20 @@ export class ContactComponent extends BaseComponent implements OnInit {
       this.pageSize = res.pageSize;
       });
   }
+  handleChange(id,value) {
+    // let data_image = data == '' ? null : data;
+    let tmp = {
+      status:parseInt(value),
+      contactId:id,          
+      };
+      console.log(tmp ,'tmp');
+      
+    this._api.post('/api/v1/contact/contact_change_status',tmp).takeUntil(this.unsubscribe).subscribe(res => {
+        alert('Cập nhật trạng thái thành công');
+        this.search();
+      });
+
+}
   loadPage(pageNumber) { 
     this._api.post('/api/v1/contact/contact_get_list_paging_sort_search_filter',{pageNumber: this.pageNumber , pageSize: this.pageSize,sortCase:this.sortCase,ascSort:this.ascSort}).takeUntil(this.unsubscribe).subscribe(res => {
       this.users = res.data.content;

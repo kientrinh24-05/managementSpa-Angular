@@ -23,6 +23,7 @@ export class ProductComponent extends BaseComponent implements OnInit {
   public page = 1;
   public status = 1;
   public searchKey = "";
+  public urlFake = "https://github.com/xomrayno1/AppSpa";
   public uploadedFiles: any[] = [];
   public formsearch: any;
   public formdata: any;
@@ -152,7 +153,7 @@ export class ProductComponent extends BaseComponent implements OnInit {
       formData.append('name', value.name)
       formData.append('price', value.price)
       formData.append('description', value.description)
-      formData.append('imgFile', this.user.imgFile)
+      formData.append('imageFile', this.avatarFile)
       formData.append('id', this.user.id)
       console.log(this.user.imgFile);
     
@@ -247,7 +248,7 @@ export class ProductComponent extends BaseComponent implements OnInit {
             'name': [this.user.name, Validators.required],
             'price': [this.user.price],
             'description': [this.user.description, Validators.required],
-            'imgUrl': [this.user.imgUrl],
+            'imgUrl': [this.urlFake],
           }, {
           
           }); 

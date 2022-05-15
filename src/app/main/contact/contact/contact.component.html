@@ -20,6 +20,8 @@
             <th style="text-align: left;">Email</th>
             <th style="text-align: left;">Chủ đề</th>
             <th style="text-align: left;">Nội dung</th>
+            <th style="text-align: left;">Trạng thái</th>
+            
             <th style="width: 130px; text-align: left;">Thời gian tạo</th>
             <!-- <th style="width: 120px; text-align: left;">Tác vụ</th> -->
           </tr>
@@ -31,6 +33,14 @@
             <td>{{ item.email }}</td>
             <td>{{ item.subject}}</td>
             <td>{{ item.message}}</td>
+            <td>
+              <select name="" id="" [value]="item.status"
+                  (change)="handleChange(item.id,$event.target.value)"
+              >
+                  <option value=0>Chưa xem</option>
+                  <option value=1>Đã xem</option>
+              </select>
+          </td>
             <td>{{ item.created_date}}</td>
           
           </tr>
