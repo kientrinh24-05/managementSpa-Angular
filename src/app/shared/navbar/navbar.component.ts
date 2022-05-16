@@ -7,7 +7,8 @@ import { AuthenticationService } from 'src/app/lib/authentication.service';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
-  public username: string;
+  public name: string;
+
   constructor(private authenticationService: AuthenticationService) { 
   }
 
@@ -15,9 +16,7 @@ export class NavbarComponent implements OnInit {
     this.getUserName()
   }
   getUserName () {
-    this.username = localStorage.getItem('user');
-    console.log(this.username);
-    
+    this.name =JSON.parse(localStorage.getItem('user')).username ;
   }
   logout() {
     this.authenticationService.logout();
