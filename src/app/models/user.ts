@@ -5,6 +5,8 @@ export class User {
     password: string;
     firstName: string;
     lastName: string;
-    role: Role;
+    roles: {
+        authority:[Role];
+        }
     token?: string;
 }
