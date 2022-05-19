@@ -33,19 +33,19 @@ export const mainRoutes: Routes = [
         path: 'user',
         loadChildren: () =>
           import('./user/user.module').then((m) => m.UserModule),
-        canActivate: [RoleGuard], data: { roles: [Role.user] },
+        canActivate: [RoleGuard], data: { roles: [Role.admin] },
       },
       {
         path: 'product',
         loadChildren: () =>
           import('./product/product.module').then((m) => m.ProductModule),
-        canActivate: [RoleGuard], data: { roles: [Role.admin] },
+        canActivate: [RoleGuard],
       },
       {
         path: 'contact',
         loadChildren: () =>
           import('./contact/contact.module').then((m) => m.ContactModule),
-        canActivate: [RoleGuard], data: { roles: [Role.user] },
+        canActivate: [RoleGuard],
       },
     ],
   },
